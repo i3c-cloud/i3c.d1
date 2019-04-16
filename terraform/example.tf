@@ -30,7 +30,8 @@ provider "aws" {
 
 
 resource "aws_instance" "Ansible-Host-1" {
-  ami           = "ami-b374d5a5"
+  //ami           = "ami-b374d5a5"
+  ami = "ami-0a313d6098716f372"
   instance_type = "t2.micro"
   key_name = "test1"
 
@@ -40,11 +41,14 @@ resource "aws_instance" "Ansible-Host-1" {
 */
   provisioner "remote-exec" {
     inline = [
-      //"sudo apt-get -y update",
+      //"sudo -i",
       "sudo adduser --disabled-password --gecos \"\" ansible",
       "sudo adduser ansible sudo",
+      "sudo sh -c 'echo \"ansible  ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers.d/ansible'",
+      "sudo chmod 0440 /etc/sudoers.d/ansible",
       "sudo cp -R /home/ubuntu/.ssh /home/ansible/",
-      "sudo chown -R ansible:ansible /home/ansible/.ssh"
+      "sudo chown -R ansible:ansible /home/ansible/.ssh",
+      "sudo apt-get install -y python"
     ],
       connection {
     type     = "ssh"
