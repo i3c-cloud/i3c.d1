@@ -54,7 +54,7 @@ resource "aws_instance" "Ansible-Host-1" {
     type     = "ssh"
     user     = "ubuntu"
     //password = "${var.root_password}"
-     private_key   = "${file("/run/secrets/sshKeys/${var.ssh_key_name}")}"
+     private_key   = "${file("/run/secrets/aws/sshKeys/${var.ssh_key_name}")}"
   }
   }
 
